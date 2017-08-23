@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,7 +14,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+
+    if (Auth::check()) {
+        $user = Auth::user();
+        return $user->name . " 已登入";
+    } else {
+        return "未登入";
+    }
+});
+
+Route::get('/logout', function(){
+    Auth::logout();
 });
 
 Route::auth();
